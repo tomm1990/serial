@@ -9,13 +9,6 @@ struct person{
     unsigned int length_l_name;
 };
 
-struct personRead{
-    char * rf_name;
-    char * rl_name;
-    unsigned int length_rf_name;
-    unsigned int length_rl_name;
-};
-
 int main()
 {
     char temp[128];
@@ -61,6 +54,8 @@ int main()
     if(one.f_name) free(one.f_name);
     if(MyFile) fclose(MyFile);
 
+
+
     //----------- Read from file
 
     FILE * readFile = fopen("test.txt","r");
@@ -68,25 +63,25 @@ int main()
         printf("Error\n");
         return 0;
     }
-    struct personRead two;
+    struct person two;
 
-    fread( &two.length_rf_name , sizeof(int)  ,  1 , readFile );
-    fread( &two.length_rl_name , sizeof(int)  ,  1 , readFile );
+    fread( &two.length_f_name , sizeof(int)  ,  1 , readFile );
+    fread( &two.length_l_name , sizeof(int)  ,  1 , readFile );
 
-    two.rf_name = (char*)malloc(sizeof(char) * one.length_f_name);
-    fread( two.rf_name , one.length_f_name , 1 , readFile );
+    two.f_name = (char*)malloc(sizeof(char) * one.length_f_name);
+    fread( two.f_name , one.length_f_name , 1 , readFile );
 
-    two.rl_name = (char*)malloc(sizeof(char) * one.length_l_name);
-    fread( two.rl_name , one.length_l_name , 1 , readFile );
+    two.l_name = (char*)malloc(sizeof(char) * one.length_l_name);
+    fread( two.l_name , one.length_l_name , 1 , readFile );
 
-    printf("\n\ntwo.rf_name is %s\n" , two.rf_name);
-    printf("two.rl_name is %s\n" , two.rl_name);
-    printf("two.length_rf_name is %d\n" , two.length_rf_name);
-    printf("two.length_rl_name is %d\n" , two.length_rl_name);
+    printf("\n\ntwo.f_name is %s\n" , two.f_name);
+    printf("two.l_name is %s\n" , two.l_name);
+    printf("two.length_f_name is %d\n" , two.length_f_name);
+    printf("two.length_l_name is %d\n" , two.length_l_name);
 
     if(readFile) close(readFile);
-    if(two.rf_name) free (two.rf_name);
-    if(two.rl_name) free (two.rl_name);
+    if(two.f_name) free (two.f_name);
+    if(two.l_name) free (two.l_name);
 
     return 0;
 }
