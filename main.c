@@ -9,17 +9,18 @@ struct person{
     unsigned int length_l_name;
 };
 
-int main()
-{
+int main(){
     char temp[128];
     struct person one;
 
+    // input first name
     printf("Please provide your first name\n");
     scanf("%s",temp);
     one.length_f_name = strlen(temp) + 1;
     one.f_name = (char*)malloc(sizeof(char)*one.length_f_name);
     strcpy(one.f_name , temp);
 
+    // input last name
     printf("Please provide your last name\n");
     scanf("%s",temp);
     one.length_l_name = strlen(temp) + 1;
@@ -29,7 +30,7 @@ int main()
     char * buffer = (char*) malloc( 2*sizeof(int) + one.length_l_name + one.length_f_name );
     char * backup = buffer;
 
-    memcpy(buffer , &one.length_f_name , sizeof(int) );
+    memcpy( buffer , &one.length_f_name , sizeof(int) );
     buffer+=sizeof(int);
 
     memcpy(buffer , &one.length_l_name , sizeof(int));
@@ -56,14 +57,15 @@ int main()
 
 
 
-    //----------- Read from file
+    //----------- Read from file ---------------///
+
+    struct person two;
 
     FILE * readFile = fopen("test.txt","r");
     if(!readFile){
         printf("Error\n");
         return 0;
     }
-    struct person two;
 
     fread( &two.length_f_name , sizeof(int)  ,  1 , readFile );
     fread( &two.length_l_name , sizeof(int)  ,  1 , readFile );
@@ -82,6 +84,8 @@ int main()
     if(readFile) close(readFile);
     if(two.f_name) free (two.f_name);
     if(two.l_name) free (two.l_name);
+
+    remove("test.txt");
 
     return 0;
 }
